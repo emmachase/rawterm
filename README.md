@@ -45,6 +45,6 @@ Most options are turned off by default (meaning that RawTerm will actively turn 
 
 Signal Processing is left on by default to avoid situations where the user can't exit the program. Only turn this off once you've implemented a sane way to exit your program.
 
-Ouptut Carraige Return Processing is left on by default because generally you don't want to have to do `print("abc\r")`.
+Ouptut Carriage Return Processing is left on by default because generally you don't want to have to do `print("abc\r")`.
 
 Read Timeout is disabled (set to 0) by default because it causes `io.read` to return `nil` on timeouts which may be unexpected behavior.
