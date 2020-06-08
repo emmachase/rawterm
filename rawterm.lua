@@ -277,4 +277,23 @@ function rawterm.setCursorPos(x, y)
     io.write("\27[" .. floor(y) .. ";" .. floor(x) .. "H")
 end
 
+function rawterm.clearScreen()
+    io.write("\27[2J")
+end
+
+function rawterm.clearLine()
+    io.write("\27[2K")
+end
+
+function rawterm.scroll(n)
+    n = n or 1
+    if n == 0 then return end
+
+    if n > 0 then
+        io.write("\27[" ..  n .. "S")
+    else
+        io.write("\27[" .. -n .. "T")
+    end
+end
+
 return rawterm

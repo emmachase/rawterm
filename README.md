@@ -54,4 +54,9 @@ rawterm.getWindowSize()
 
 rawterm.getCursorPos()
 rawterm.setCursorPos(x, y)
+
+rawterm.clearScreen()
+rawterm.clearLine()
+
+rawterm.scroll(n)
 ```
