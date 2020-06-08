@@ -1,9 +1,8 @@
 local rawterm = require("rawterm")
 
 local carriageOut = false -- Whether to disable '\n' -> '\r\n' translation
-rawterm.enableRawMode({ 
+rawterm.enableRawMode({
     signals = false, -- Disables terminal processing of Ctrl+C etc
-    readtimeout = 1, -- Reads timeout after 1/10th of a second
     carriageOut = carriageOut
 })
 
@@ -14,6 +13,8 @@ local function isControlChar(c)
 end
 
 local supplement = carriageOut and "" or "\r"
+
+print("Press q to quit\r")
 while true do
     local char = io.read(1) or "\0"
 
