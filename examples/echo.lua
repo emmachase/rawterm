@@ -1,3 +1,4 @@
+package.path = "../?.lua;" .. package.path
 local rawterm = require("rawterm")
 
 local carriageOut = false -- Whether to disable '\n' -> '\r\n' translation

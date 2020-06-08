@@ -311,6 +311,10 @@ function rawterm.clearLine()
     io.write("\27[2K")
 end
 
+function rawterm.clearToLineEnd()
+    io.write("\27[0K")
+end
+
 function rawterm.scroll(n)
     n = n or 1
     if n == 0 then return end

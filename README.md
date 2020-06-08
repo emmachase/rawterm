@@ -57,6 +57,7 @@ rawterm.setCursorPos(x, y)
 
 rawterm.clearScreen()
 rawterm.clearLine()
+rawterm.clearToLineEnd()
 
 rawterm.scroll(n)
 ```
