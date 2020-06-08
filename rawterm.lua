@@ -4,6 +4,7 @@ end
 
 local ffi = require("ffi")
 local band, bnot, bor = bit.band, bit.bnot, bit.bor
+local floor = math.floor
 
 local rawterm = {}
 
@@ -27,11 +28,21 @@ ffi.cdef [[
             speed_t c_ospeed;
         };
 
+    struct winsize
+        {
+            unsigned short int ws_row;
+            unsigned short int ws_col;
+            unsigned short int ws_xpixel;
+            unsigned short int ws_ypixel;
+        };
+
     // Function Definitions
     int tcgetattr (int __fd, struct termios *__termios_p);
 
     int tcsetattr (int __fd, int __optional_actions,
               const struct termios *__termios_p);
+
+    int ioctl (int __fd, unsigned long int __request, ...);
 
     char *strerror(int errnum);
 
@@ -124,6 +135,7 @@ local tcs_cc = {
 }
 
 local STDIN_FILENO = 0
+local STDOUT_FILENO = 1
 
 local function die(cause)
     local errMsg = ffi.string(C.strerror(C.errno))
@@ -235,6 +247,34 @@ function rawterm.disableRawMode()
     if orig_termios then
         return rawterm.flushOptions(orig_termios)
     end
+end
+
+local getWindowSizeOption = 0x5413
+function rawterm.getWindowSize()
+    local wsize = ffi.new("struct winsize[1]")
+    C.ioctl(STDOUT_FILENO, getWindowSizeOption, wsize)
+
+    return wsize[0].ws_col, wsize[0].ws_row
+end
+
+function rawterm.getCursorPos()
+    io.write("\27[6n")
+    local res = ""
+    while true do
+        local c = io.read(1)
+        if c == "R" then
+            break
+        end
+
+        res = res .. c
+    end
+
+    local y, x = res:match("%[(%d+);(%d+)")
+    return x, y
+end
+
+function rawterm.setCursorPos(x, y)
+    io.write("\27[" .. floor(y) .. ";" .. floor(x) .. "H")
 end
 
 return rawterm

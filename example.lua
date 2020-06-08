@@ -14,7 +14,10 @@ end
 
 local supplement = carriageOut and "" or "\r"
 
-print("Press q to quit\r")
+local function tuple(...) return table.concat({...}, ",") end
+print("Window size: " .. tuple(rawterm.getWindowSize()) .. supplement)
+print("Current cursor pos: " .. tuple(rawterm.getCursorPos()) .. supplement)
+print("Press q to quit" .. supplement)
 while true do
     local char = io.read(1) or "\0"
 
