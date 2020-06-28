@@ -4,6 +4,15 @@
 
 RawTerm is a Lua library that allows access to "non-canonical mode" for terminal input. This allows programs to read input from STDIN byte by byte without requiring the user to press &lt;Enter&gt;, and allows for reading characters not normally accessible like the arrow keys and function keys.
 
+## Install
+
+RawTerm is provided as a one-file lua library. You can install it with LuaRocks:
+```
+luarocks install rawterm
+```
+
+Alternatively, just grab the `rawterm.lua` file above.
+
 ## Usage
 
 ```lua
