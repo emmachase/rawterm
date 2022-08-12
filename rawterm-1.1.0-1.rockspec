@@ -1,7 +1,7 @@
 package = "rawterm"
-version = "1.0.0-1"
+version = "1.1.0-1"
 source = {
-   url = "git+ssh://git@github.com-emmachase/emmachase/rawterm.git"
+   url = "git+ssh://git@github.com/emmachase/rawterm.git"
 }
 description = {
    summary = "A Lua library that allows access to \"non-canonical mode\" for terminal input.",
