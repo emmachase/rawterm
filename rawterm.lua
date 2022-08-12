@@ -71,8 +71,6 @@ ffi.cdef [[
     int ioctl (int __fd, unsigned long int __request, ...);
 
     char *strerror(int errnum);
-
-    int errno;
 ]]
 
 local iflags = {
@@ -164,7 +162,7 @@ local STDIN_FILENO = 0
 local STDOUT_FILENO = 1
 
 local function die(cause)
-    local errMsg = ffi.string(C.strerror(C.errno))
+    local errMsg = ffi.string(C.strerror(ffi.errno()))
     error(cause .. " : " .. errMsg, 2)
 end
 
