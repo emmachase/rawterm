@@ -9,6 +9,11 @@ description = {
    homepage = "https://github.com/emmachase/rawterm",
    license = "MIT"
 }
+dependencies = {
+	"lua >= 5.1",
+	"cffi-lua >= 0.2.1",
+	"bit32 >= 5.3.5.1"
+}
 build = {
    type = "builtin",
    modules = {
