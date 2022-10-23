@@ -24,18 +24,32 @@
 
 ]]
 
-if not jit then
-    error("The RawTerm library requires LuaJIT FFI")
-end
+local bitop = jit and
+	bit or require("bit32")
 
-local ffi = require("ffi")
-local band, bnot, bor = bit.band, bit.bnot, bit.bor
+local ffi = require(
+	jit and
+	"ffi" or "cffi"
+)
+local band, bnot, bor = bitop.band, bitop.bnot, bitop.bor
 local floor = math.floor
 
 local rawterm = {}
 
+local winsize = jit and [[
+unsigned short int ws_row;
+unsigned short int ws_col;
+unsigned short int ws_xpixel;
+unsigned short int ws_ypixel;
+]] or [[
+unsigned int ws_row;
+unsigned int ws_col;
+unsigned int ws_xpixel;
+unsigned int ws_ypixel;
+]]
+
 local C = ffi.C
-ffi.cdef [[
+ffi.cdef([[
 
     // Type Definitions
     typedef unsigned char cc_t;
@@ -55,12 +69,7 @@ ffi.cdef [[
         };
 
     struct winsize
-        {
-            unsigned short int ws_row;
-            unsigned short int ws_col;
-            unsigned short int ws_xpixel;
-            unsigned short int ws_ypixel;
-        };
+        {]]..winsize..[[};
 
     // Function Definitions
     int tcgetattr (int __fd, struct termios *__termios_p);
@@ -71,7 +80,7 @@ ffi.cdef [[
     int ioctl (int __fd, unsigned long int __request, ...);
 
     char *strerror(int errnum);
-]]
+]])
 
 local iflags = {
     IGNBRK = 0000001,  -- Ignore break condition.
