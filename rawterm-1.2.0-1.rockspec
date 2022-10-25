@@ -1,5 +1,5 @@
 package = "rawterm"
-version = "1.1.0-2"
+version = "1.2.0-1"
 source = {
    url = "git+ssh://git@github.com/emmachase/rawterm.git"
 }
