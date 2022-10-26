@@ -24,32 +24,22 @@
 
 ]]
 
-local bitop = jit and
-	bit or require("bit32")
-
 local ffi = require(
 	jit and
 	"ffi" or "cffi"
 )
+
+local bitop = jit and
+	bit or require("bit32")
+
+
 local band, bnot, bor = bitop.band, bitop.bnot, bitop.bor
 local floor = math.floor
 
 local rawterm = {}
 
-local winsize = jit and [[
-unsigned short int ws_row;
-unsigned short int ws_col;
-unsigned short int ws_xpixel;
-unsigned short int ws_ypixel;
-]] or [[
-unsigned int ws_row;
-unsigned int ws_col;
-unsigned int ws_xpixel;
-unsigned int ws_ypixel;
-]]
-
 local C = ffi.C
-ffi.cdef([[
+ffi.cdef[[
 
     // Type Definitions
     typedef unsigned char cc_t;
@@ -69,7 +59,12 @@ ffi.cdef([[
         };
 
     struct winsize
-        {]]..winsize..[[};
+        {
+						unsigned short ws_row;
+						unsigned short ws_col;
+						unsigned short ws_xpixel;
+						unsigned short ws_ypixel;
+				};
 
     // Function Definitions
     int tcgetattr (int __fd, struct termios *__termios_p);
@@ -80,7 +75,7 @@ ffi.cdef([[
     int ioctl (int __fd, unsigned long int __request, ...);
 
     char *strerror(int errnum);
-]])
+]]
 
 local iflags = {
     IGNBRK = 0000001,  -- Ignore break condition.
