@@ -1,7 +1,5 @@
 # RawTerm
 
-> _LuaJIT FFI is required to use this library_
-
 RawTerm is a Lua library that allows access to "non-canonical mode" for terminal input. This allows programs to read input from STDIN byte by byte without requiring the user to press &lt;Enter&gt;, and allows for reading characters not normally accessible like the arrow keys and function keys.
 
 ## Install

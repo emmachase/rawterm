@@ -24,18 +24,22 @@
 
 ]]
 
-if not jit then
-    error("The RawTerm library requires LuaJIT FFI")
-end
+local ffi = require(
+	jit and
+	"ffi" or "cffi"
+)
 
-local ffi = require("ffi")
-local band, bnot, bor = bit.band, bit.bnot, bit.bor
+local bitop = jit and
+	bit or require("bit32")
+
+
+local band, bnot, bor = bitop.band, bitop.bnot, bitop.bor
 local floor = math.floor
 
 local rawterm = {}
 
 local C = ffi.C
-ffi.cdef [[
+ffi.cdef[[
 
     // Type Definitions
     typedef unsigned char cc_t;
@@ -56,11 +60,11 @@ ffi.cdef [[
 
     struct winsize
         {
-            unsigned short int ws_row;
-            unsigned short int ws_col;
-            unsigned short int ws_xpixel;
-            unsigned short int ws_ypixel;
-        };
+						unsigned short ws_row;
+						unsigned short ws_col;
+						unsigned short ws_xpixel;
+						unsigned short ws_ypixel;
+				};
 
     // Function Definitions
     int tcgetattr (int __fd, struct termios *__termios_p);
