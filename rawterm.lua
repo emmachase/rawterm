@@ -24,14 +24,8 @@
 
 ]]
 
-local ffi = require(
-	jit and
-	"ffi" or "cffi"
-)
-
-local bitop = jit and
-	bit or require("bit32")
-
+local ffi = require(jit and "ffi" or "cffi")
+local bitop = jit and bit or require("bit32")
 
 local band, bnot, bor = bitop.band, bitop.bnot, bitop.bor
 local floor = math.floor
@@ -60,11 +54,11 @@ ffi.cdef[[
 
     struct winsize
         {
-						unsigned short ws_row;
-						unsigned short ws_col;
-						unsigned short ws_xpixel;
-						unsigned short ws_ypixel;
-				};
+            unsigned short ws_row;
+            unsigned short ws_col;
+            unsigned short ws_xpixel;
+            unsigned short ws_ypixel;
+        };
 
     // Function Definitions
     int tcgetattr (int __fd, struct termios *__termios_p);
