@@ -60,10 +60,10 @@ ffi.cdef[[
 
     struct winsize
         {
-						unsigned short ws_row;
-						unsigned short ws_col;
-						unsigned short ws_xpixel;
-						unsigned short ws_ypixel;
+						unsigned short int ws_row;
+						unsigned short int ws_col;
+						unsigned short int ws_xpixel;
+						unsigned short int ws_ypixel;
 				};
 
     // Function Definitions
